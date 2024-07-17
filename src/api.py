@@ -2,7 +2,11 @@ import requests
 
 
 class HHParser:
+    '''класс получения данных с HH.py'''
+
     def get_employers(self):
+        '''получаем данные для БД от определенных работодателей'''
+
         employers = []
         employer_ids = [9694561, 1651663, 959366, 30637, 1491512, 4156856, 3949847,
                         6053439, 1373, 10061101]
@@ -14,6 +18,8 @@ class HHParser:
         return employers
 
     def get_vacancies(self):
+        '''получаем вакансии от определенных работодателей'''
+
         vacancies = []
         employer_ids = [9694561, 1651663, 959366, 30637, 1491512, 4156856, 3949847,
                         6053439, 1373, 10061101]
@@ -30,6 +36,7 @@ class HHParser:
 
     def get_vacancies_list(self):
         '''получаем данные для БД'''
+
         vacancies = self.get_vacancies()
         vacancies_list = []
         for vacancy in vacancies:

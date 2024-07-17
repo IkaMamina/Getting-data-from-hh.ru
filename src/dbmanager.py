@@ -3,10 +3,13 @@ from src.api import HHParser
 
 
 class DBManager:
+    '''класс для работы с БД. Создание и сохранение данных в БД'''
     def __init__(self, dbname: str, user: str, password: str, host: str, port: int):
         self.connection = psycopg2.connect(dbname=dbname, user=user, password=password, host=host, port=port)
 
     def create_table(self):
+        '''создание таблиц БД'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
                        CREATE TABLE IF NOT EXISTS employers
@@ -30,6 +33,7 @@ class DBManager:
 
     def save_to_database(self):
         """сохранение данных в БД"""
+
         hh = HHParser()
         employers = hh.get_employers()
         vacancies = hh.get_vacancies_list()
@@ -52,6 +56,7 @@ class DBManager:
 
     def get_companies_and_vacancies_count(self):
         '''получает список всех компаний и количество вакансий у каждой компании.'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT employers.name,
@@ -63,6 +68,7 @@ class DBManager:
 
     def get_all_vacancies(self=None):
         '''получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT employers.name, vac.name, salary_from, url
@@ -73,6 +79,7 @@ class DBManager:
 
     def get_avg_salary(self):
         '''получает среднюю зарплату по вакансиям.'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT vacancies.name, round(AVG(salary_from)) AS average_salary
@@ -84,6 +91,7 @@ class DBManager:
 
     def get_vacancies_with_higher_salary(self):
         '''получает список всех вакансий, у которых зарплата выше средней по всем вакансиям.'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT vacancies.name, salary_from
@@ -96,6 +104,7 @@ class DBManager:
 
     def get_vacancies_with_keyword(self, keyword):
         '''получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python.'''
+
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT vacancies.name FROM vacancies
