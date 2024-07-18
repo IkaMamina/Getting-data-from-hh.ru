@@ -108,7 +108,9 @@ class DBManager:
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT vacancies.name FROM vacancies
-            WHERE vacancies.name LIKE '%{keyword}%'
+            WHERE LOWER(name) LIKE '%{keyword}%'
+            OR LOWER(name) LIKE '%{keyword}'
+            OR LOWER(name) LIKE '{keyword}%'
             GROUP BY vacancies.name
             """)
         return cursor.fetchall()
