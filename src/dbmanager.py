@@ -106,11 +106,6 @@ class DBManager:
         '''получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python.'''
 
         cursor = self.connection.cursor()
-        cursor.execute("""
-            SELECT vacancies.name FROM vacancies
-            WHERE LOWER(name) LIKE '%{keyword}%'
-            OR LOWER(name) LIKE '%{keyword}'
-            OR LOWER(name) LIKE '{keyword}%'
-            GROUP BY vacancies.name
-            """)
+        cursor.execute(
+            f"SELECT vacancies.name FROM vacancies WHERE LOWER(name) LIKE '%{keyword}%'")
         return cursor.fetchall()
