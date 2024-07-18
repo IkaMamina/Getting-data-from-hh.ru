@@ -107,5 +107,5 @@ class DBManager:
 
         cursor = self.connection.cursor()
         cursor.execute(
-            f"SELECT vacancies.name FROM vacancies WHERE LOWER(name) LIKE '%{keyword}%'")
+            f"SELECT * FROM vacancies WHERE LOWER(name) LIKE '%{keyword}%'")
         return cursor.fetchall()
